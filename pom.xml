@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <!-- PREAMBLE -->
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- SECTION 1: ARCHETYPE INFORMATION -->
+  <groupId>com.vsthost.archetypes</groupId>
+  <artifactId>jee7-sandbox</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <!-- SECTION 2: GENERAL INFORMATION -->
+  <name>JEE7 Sandbox Application</name>
+  <description>Provides a sandbox skeleton for developing JEE7 applications</description>
+  <url>https://github.com/vst/jee7-sandbox-archetype</url>
+
+  <!-- SECTION 3: LICENSING -->
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <!-- SECTION 4: PROPERTIES -->
+  <properties>
+    <!-- Define the source encoding for the build -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Define target and source compiler versions -->
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+
+    <!-- Define compiler plugin version -->
+    <version.compiler.plugin>3.1</version.compiler.plugin>
+
+    <!-- Define the WAR plugin version -->
+    <version.war.plugin>2.1.1</version.war.plugin>
+
+    <!-- Define the Wildfly Maven plugin version -->
+    <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+
+    <!-- Define the version of the BOM for JBOSS -->
+    <version.jboss.bom>8.0.0.Final</version.jboss.bom>
+
+    <!-- Define the version of the Wildfly -->
+    <version.wildfly>8.0.0.Final</version.wildfly>
+
+    <!-- Define versions of all necessary libraries (if any) -->
+  </properties>
+
+  <!-- SECTION 5: REPOSITORIES -->
+  <repositories>
+    <repository>
+      <id>JBoss Repository</id>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+    </repository>
+  </repositories>
+
+  <!-- SECTION 6: DEPENDENCY MANAGEMENT -->
+  <dependencyManagement>
+    <dependencies>
+      <!-- BILL OF MATERIALS (BOM) for Wildfly: -->
+      <dependency>
+        <groupId>org.wildfly.bom</groupId>
+        <artifactId>jboss-javaee-7.0-with-all</artifactId>
+        <version>${version.jboss.bom}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- SECTION 7: DEPENDENCIES -->
+  <dependencies>
+    <dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.spec.javax.annotation</groupId>
+      <artifactId>jboss-annotations-api_1.2_spec</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.spec.javax.servlet</groupId>
+      <artifactId>jboss-servlet-api_3.1_spec</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.spec.javax.json</groupId>
+      <artifactId>jboss-json-api_1.0_spec</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jboss.spec.javax.interceptor</groupId>
+      <artifactId>jboss-interceptors-api_1.2_spec</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>jaxrs-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-jpamodelgen</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.arquillian.protocol</groupId>
+      <artifactId>arquillian-protocol-servlet</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <!-- SECTION 8: BUILD PLUGINS -->
+  <build>
+    <finalName>${project.artifactId}</finalName>
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${version.war.plugin}</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.wildfly.plugins</groupId>
+        <artifactId>wildfly-maven-plugin</artifactId>
+        <version>${version.wildfly.maven.plugin}</version>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${version.compiler.plugin}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
