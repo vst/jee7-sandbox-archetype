@@ -51,6 +51,8 @@
     <version.wildfly>8.0.0.Final</version.wildfly>
 
     <!-- Define versions of all necessary libraries (if any) -->
+    <version.webjar.bootstrap>3.2.0</version.webjar.bootstrap>
+    <version.webjar.jquery>2.1.1</version.webjar.jquery>
   </properties>
 
   <!-- SECTION 5: REPOSITORIES -->
@@ -172,7 +174,18 @@
       <artifactId>arquillian-protocol-servlet</artifactId>
       <scope>test</scope>
     </dependency>
+    
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>${version.webjar.jquery}</version>
+    </dependency>
 
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>${version.webjar.bootstrap}</version>
+    </dependency>
   </dependencies>
 
   <!-- SECTION 8: BUILD PLUGINS -->
