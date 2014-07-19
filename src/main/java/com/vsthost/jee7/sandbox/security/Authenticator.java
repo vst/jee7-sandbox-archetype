@@ -16,48 +16,44 @@
 
 package com.vsthost.jee7.sandbox.security;
 
-import java.security.Principal;
-import java.util.Arrays;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.Optional;
 import java.util.StringTokenizer;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
 
+import com.vsthost.jee7.sandbox.models.User;
+import com.vsthost.jee7.sandbox.services.UserService;
+import com.vsthost.jee7.sandbox.services.exceptions.NoUserForCredentials;
+
 /**
- * Defines a simple, demonstration only authenticator.
+ * Defines a simple authenticator.
+ * 
+ * <p>
+ * 
+ * Note that the password is kept as a plain password in the database.
+ * For production purposes, hashing is needed.
  * 
  * @author Vehbi Sinan Tunalioglu
  */
 @ApplicationScoped
 public class Authenticator {
-
-	/**
-	 * Defines a static database for demonstration purposes.
-	 */
-	private static Map<String, User> Database;
+	@Inject
+	private UserService userService;
 	
-	// Initialize a demo database:
-	static {
-		Authenticator.Database = new HashMap<String, User>();
-		Authenticator.Database.put("admin", new User("admin", "admin", new HashSet<String>(Arrays.asList(AuthRoles.ADMIN))));
-		Authenticator.Database.put("user", new User("user", "user", new HashSet<String>(Arrays.asList(AuthRoles.USER))));
-		Authenticator.Database.put("guest", new User("guest", "guest"));
-	}
-
 	/**
 	 * Attempts to authenticate a user.
 	 *  
-	 * @param request The client request object.
-	 * @return The principle.
+	 * @param request the client request object.
+	 * @return An optional user if the authentication is successful.
+	 * @throws Web application exceptions if there is a "BAD_REQUEST".
 	 */
-	public Principal authenticate(HttpServletRequest request) {
-		// Attempt to get the authentication hueader:
+	public Optional<User> authenticate(HttpServletRequest request) {
+		// Attempt to get the authentication header:
 		String authHeader = request.getHeader("Authorization");
 		
 		// Check the authentication header:
@@ -69,7 +65,6 @@ public class Authenticator {
         final String encodedTokens = authHeader.replaceFirst("Basic ", "");
 
         // Decode the username and password:
-        // TODO: Following statement may raise exception if decoding is unsuccessful. Fail gracefully if so.
         String decodedTokens = null;
         try {
         	decodedTokens = new String(Base64.getDecoder().decode(encodedTokens.getBytes()));
@@ -102,23 +97,12 @@ public class Authenticator {
         	throw new WebApplicationException(Status.BAD_REQUEST);
         }
         
-        // Get the user with the username:
-        User user = Authenticator.Database.get(username);
-        
-        // Check the user:
-        if (user == null) {
-        	// No such user. Return null:
-        	return null;
+        // Get an optional user and return:
+        try {
+			return Optional.of(this.userService.getByCredentials(username, password));
+		}
+        catch (NoUserForCredentials e) {
+        	return Optional.empty();
         }
-        
-        // Check the password:
-        if (!user.getPassword().equals(password)) {
-        	// Password does not match:
-        	return null;
-        }
-        
-        // Well done, return the user:
-        return user;		
 	}
-	
 }

@@ -43,7 +43,7 @@ public class VApplication {
      * Provides the entity manager.
      */
     @Produces
-    @PersistenceContext
+	@PersistenceContext
     private EntityManager em;
     
     /**

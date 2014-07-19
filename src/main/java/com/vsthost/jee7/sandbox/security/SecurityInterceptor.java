@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -30,10 +31,13 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
+
+import com.vsthost.jee7.sandbox.models.User;
 
 /**
  * Provides a security interceptor based on HTTP requests.
@@ -64,7 +68,10 @@ import javax.ws.rs.core.Response.Status;
 @Secured
 @Interceptor
 public class SecurityInterceptor {
-    @Inject
+	@Inject
+	EntityManager em;
+
+	@Inject
     private Logger logger;
 
     @Inject
@@ -110,8 +117,9 @@ public class SecurityInterceptor {
      * will be raised. Otherwise, the request will be updated with the
      * principle information.
      *
-     * @param request The context in which the request will be
+     * @param context The context in which the request will be
      * authenticated.
+     * @return An updated HTTP Servlet request.
      */
     private HttpServletRequest authenticate(InvocationContext context) {
         // Get all the parameters of the context:
@@ -138,10 +146,10 @@ public class SecurityInterceptor {
         HttpServletRequest request = (HttpServletRequest) parameters[requestIndex];
         
         // Attempt to get the principle:
-        final Principal principal = authenticator.authenticate(request);
+        Optional<User> principal = authenticator.authenticate(request);
 
         // Check if the principle exists:
-        if (principal == null) {
+        if (!principal.isPresent()) {
             // Nope, we will raise an error: HTTP 401:
             throw new WebApplicationException(Status.UNAUTHORIZED);
         }
@@ -150,7 +158,10 @@ public class SecurityInterceptor {
         HttpServletRequestWrapper updatedRequest = new HttpServletRequestWrapper(request) {
             @Override
             public Principal getUserPrincipal() {
-                return principal;
+            	return new UserPrincipal(
+            			principal.get().getUsername(),
+            			principal.get().getRoles(),
+            			principal.get());            	
             }
         };
         
@@ -161,6 +172,14 @@ public class SecurityInterceptor {
         return updatedRequest;
     }
 
+    /**
+     * Authorizes the request or raises FORBIDDEN/UNAUTHORIZED errors.
+     * 
+     * @param context the context in which the request is authorized.
+     * @param request the request to be authorized.
+     * @throws Web application exceptions for FORBIDDEN/UNAUTHORIZED
+     * errors. 
+     */
     private void authorizeRequest(InvocationContext context, HttpServletRequest request) {
     	// We will check if there is any security decorators. Get 
     	// the method first:
@@ -186,16 +205,103 @@ public class SecurityInterceptor {
         	
         	// Get the set of roles allowed:
         	Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
-        	
-        	// Get the user:
-        	User user = (User) request.getUserPrincipal();
+        	        	
+        	// Get the user principal:
+        	UserPrincipal userPrincipal = (UserPrincipal) request.getUserPrincipal();
         	
         	// Does user have any of these roles?
-        	if (!user.hasAnyRole(rolesSet)) {
+        	if (!userPrincipal.getRoles().stream().anyMatch(p -> rolesSet.contains(p))) {
         		// No, user does not have any of these roles. Filtered
         		// with failure. Raise HTTP 401 (ACCESS UNAUTHORIZED):
                 throw new WebApplicationException(Status.UNAUTHORIZED);
             }
         }
+    }
+    
+    /**
+     * A public, inner class for modeling a simple HTTP Servlet
+     * principle.
+     */
+    public class UserPrincipal implements Principal {
+    	/**
+    	 * Defines the name of the principal.
+    	 */
+    	private String name;
+    	
+    	/**
+    	 * Defines the roles of the principal.
+    	 */
+    	private Set<String> roles; 
+    	
+    	/**
+    	 * Defines an object for the principal.
+    	 */
+    	private Object object;
+
+    	/**
+    	 * Overriding default constructor.
+    	 * 
+    	 * @param name
+    	 * @param roles
+    	 * @param user
+    	 */
+		public UserPrincipal(String name, Set<String> roles, Object object) {
+			this.setName(name);
+			this.setRoles(roles);
+			this.setObject(object);
+		}
+
+		/**
+		 * @return the name
+		 */
+    	@Override
+		public String getName() {
+			return name;
+		}
+
+		/**
+		 * @param name the name to set
+		 */
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		/**
+		 * @return the roles
+		 */
+		public Set<String> getRoles() {
+			return roles;
+		}
+
+		/**
+		 * @param roles the roles to set
+		 */
+		public void setRoles(Set<String> roles) {
+			this.roles = roles;
+		}
+
+		/**
+		 * @return the object
+		 */
+		public Object getObject() {
+			return object;
+		}
+
+		/**
+		 * @param object the object to set
+		 */
+		public void setObject(Object object) {
+			this.object = object;
+		}
+		
+		/**
+		 * Returns true if the user has any such role.
+		 * 
+		 * @param role
+		 * @return boolean flag.
+		 */
+		public boolean hasRole (String role) {
+			return this.roles.contains(role);
+		}
     }
 }

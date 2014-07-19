@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.vsthost.jee7.sandbox.restapi;
-
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+package com.vsthost.jee7.sandbox.services.exceptions;
 
 /**
- * Initializes a REST API Application.
- *
- * @author Vehbi Sinan Tunalioglu
+ * A high level exception for end users indicating that there is
+ * no role for the query name.
+ * 
+ * @author Vehbi Sinan Tunalioglu.
  */
-@ApplicationPath("/api")
-public class API extends Application {
-	
+public class NoSuchRole extends HighLevelException {
+	private static final long serialVersionUID = 1L;
+
+	public NoSuchRole(String name) {
+		super(HighLevelException.NO_SUCH_ROLE, "No role defined with the name '" + name + "'.");
+	}
 }

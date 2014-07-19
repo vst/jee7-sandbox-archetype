@@ -26,9 +26,4 @@ public class AuthRoles {
 	 * Defines the "administrator" role label.
 	 */
 	public static final String ADMIN = "ADMIN";
-	
-	/**
-	 * Defines the "user" role label.
-	 */
-	public static final String USER = "USER";
 }
