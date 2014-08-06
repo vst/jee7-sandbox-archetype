@@ -24,3 +24,7 @@ hs_err_pid*
 /.settings
 /.apt_generated
 /.factorypath
+
+# Ignore IntelliJ related stuff:
+/.idea/
+/*.iml
