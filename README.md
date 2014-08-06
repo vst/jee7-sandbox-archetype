@@ -22,7 +22,7 @@ Now, you can no install this archetype:
 
     mvn install
 
-The archetype is installed under `~/.m2/repository/com/telosoft/archetypes/`.
+The archetype is installed under `~/.m2/repository/com/vsthost/archetypes/`.
 
 ## Creating a new Project from the Archetype
 
