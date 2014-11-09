@@ -42,15 +42,13 @@ public class APIVersion {
 	
 	@GET
 	@Produces({"application/json"})
-	@SuppressWarnings("serial")
 	@PermitAll
 	public Map<String, String> getVersion (@Context HttpServletRequest request) {
-		logger.info("User Principle: " + request.getUserPrincipal());
 		return new LinkedHashMap<String, String>() {
-			{
-				put("app", VApplication.APP_VERSION);
-				put("api", VApplication.API_VERSION);
-			}
+            {
+                put("app", VApplication.APP_VERSION);
+                put("api", VApplication.API_VERSION);
+            }
 		};
-	}
+    }
 }

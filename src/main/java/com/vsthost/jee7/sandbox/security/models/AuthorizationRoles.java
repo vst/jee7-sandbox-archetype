@@ -14,29 +14,21 @@
  * limitations under the License.
  */
 
-package com.vsthost.jee7.sandbox.security;
-
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Target;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import javax.interceptor.InterceptorBinding;
+package com.vsthost.jee7.sandbox.security.models;
 
 /**
- * Annotation for the interceptor binding.
- * 
- * <p>
- * 
- * See {@link SecurityInterceptor}
+ * Defines application-wide auhorization roles and related functionality.
  * 
  * @author Vehbi Sinan Tunalioglu
  */
-@Inherited
-@InterceptorBinding
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Secured {
+public class AuthorizationRoles {
+	/**
+	 * Defines the "administrator" role label.
+	 */
+	public static final String ADMIN = "ADMIN";
 
+    /**
+     * Defines the "user" role label.
+     */
+    public static final String USER = "USER";
 }
