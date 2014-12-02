@@ -22,7 +22,6 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -52,14 +51,14 @@ public class APIUserAccount {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<UserAccount> getUserAccounts (@Context HttpServletRequest request) {
+	public List<UserAccount> get (@Context HttpServletRequest request) {
 		return this.userAccountService.getAll();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserAccount createUserAccount (@Context HttpServletRequest request, AccountOpeningInfo aoinfo) {
+	public UserAccount create (@Context HttpServletRequest request, AccountOpeningInfo aoinfo) {
 		// Attempt to create one and returns:
 		return this.userAccountService.create(aoinfo);
 	}
@@ -67,7 +66,7 @@ public class APIUserAccount {
 	@Path("/{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserAccount getUserAccount (@Context HttpServletRequest request, @PathParam("id") String id) {
+	public UserAccount get (@Context HttpServletRequest request, @PathParam("id") String id) {
 		// Get an optional user account:
 		Optional<UserAccount> optua = this.userAccountService.getById(id);
 
