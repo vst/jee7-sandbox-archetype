@@ -16,7 +16,7 @@
 
 package com.vsthost.jee7.sandbox.restapi.endpoints;
 
-import com.vsthost.jee7.sandbox.restapi.serializers.PasswordChangeForm;
+import com.vsthost.jee7.sandbox.restapi.forms.PasswordChangeForm;
 import com.vsthost.jee7.sandbox.restapi.utils.HTTPResponseBuilder;
 import com.vsthost.jee7.sandbox.security.models.UserAccount;
 import com.vsthost.jee7.sandbox.security.services.UserAccountService;
@@ -68,7 +68,7 @@ public class APIMe {
 	public Response changePassword(@Context HttpServletRequest request, PasswordChangeForm form) {
 		// Check form inputs:
 		if (!form.isValid()) {
-			return HTTPResponseBuilder.badRequest().error("Passwords don't match.").build();
+			throw new IllegalArgumentException("Passwords don't match");
 		}
 
 		// Get the optional user account:
@@ -82,7 +82,7 @@ public class APIMe {
 
 		// Check the old password:
 		if (!this.userAccountService.checkCredentials(optua.get().getUsername(), form.getOldPassword())) {
-			return HTTPResponseBuilder.badRequest().error("Check the current password.").build();
+			throw new IllegalArgumentException("Password is invalid.");
 		}
 
 		// Change the password:
