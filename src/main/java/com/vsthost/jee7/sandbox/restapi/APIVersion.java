@@ -16,39 +16,35 @@
 
 package com.vsthost.jee7.sandbox.restapi;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.logging.Logger;
-
 import javax.annotation.security.PermitAll;
-import javax.inject.Inject;
+import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.vsthost.jee7.sandbox.VApplication;
+import com.vsthost.jee7.sandbox.restapi.utils.HTTPResponseBuilder;
 
 /**
  * Provides a version endpoint for the REST API.
  *
  * @author Vehbi Sinan Tunalioglu
  */
+@Stateless
 @Path("/version")
 public class APIVersion {
-	@Inject
-	private Logger logger; 
-	
-	@GET
-	@Produces({"application/json"})
-	@PermitAll
-	public Map<String, String> getVersion (@Context HttpServletRequest request) {
-		return new LinkedHashMap<String, String>() {
-            {
-                put("app", VApplication.APP_VERSION);
-                put("api", VApplication.API_VERSION);
-            }
-		};
+    @GET
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVersion2 (@Context HttpServletRequest request) {
+        return HTTPResponseBuilder
+            .ok()
+            .data("app", VApplication.APP_VERSION)
+            .data("api", VApplication.API_VERSION)
+            .build();
     }
 }
