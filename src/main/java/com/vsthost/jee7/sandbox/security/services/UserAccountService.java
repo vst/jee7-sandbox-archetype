@@ -30,11 +30,11 @@ import org.picketlink.idm.credential.UsernamePasswordCredentials;
 import org.picketlink.idm.model.Account;
 import org.picketlink.idm.model.basic.BasicModel;
 import org.picketlink.idm.model.basic.Role;
-import org.picketlink.idm.model.basic.User;
 import org.picketlink.idm.query.IdentityQuery;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -370,5 +370,27 @@ public class UserAccountService {
     private Token issueToken(Account account) {
         // Issue the new token for the account:
         return this.tokenProvider.issue(account);
+    }
+
+    /**
+     * Updates a user account.
+     *
+     * @param id The id of the user account to be updated.
+     * @param username The new username
+     * @param enabled The new enabled flag
+     * @param expirationDate The new expiration date
+     * @param name The new person name
+     * @param emailAddress The new email address
+     * @return Updated user account instance.
+     */
+    public UserAccount update(String id, String username, boolean enabled, Date expirationDate, String name, String emailAddress) {
+        UserAccount userAccount = this.getById(id).get();
+        userAccount.setUsername(username);
+        userAccount.setEnabled(enabled);
+        userAccount.setExpirationDate(expirationDate);
+        userAccount.getPerson().setName(name);
+        userAccount.getPerson().setEmailAddress(emailAddress);
+        this.identityManager.update(userAccount);
+        return userAccount;
     }
 }

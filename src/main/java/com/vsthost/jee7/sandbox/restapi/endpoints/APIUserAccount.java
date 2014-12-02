@@ -79,4 +79,28 @@ public class APIUserAccount {
 		// Raise a 404:
 		throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
 	}
+
+	@Path("/{id}")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public UserAccount update (@Context HttpServletRequest request, @PathParam("id") String id, UserAccount userAccount) {
+		// Get an optional user account:
+		Optional<UserAccount> optua = this.userAccountService.getById(id);
+
+		// Check and return:
+		if (!optua.isPresent()) {
+			throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+		}
+
+		// Update and return the result:
+		return this.userAccountService.update(
+				optua.get().getId(),
+				userAccount.getUsername(),
+				userAccount.isEnabled(),
+				userAccount.getExpirationDate(),
+				userAccount.getPerson().getName(),
+				userAccount.getPerson().getEmailAddress()
+		);
+	}
 }
