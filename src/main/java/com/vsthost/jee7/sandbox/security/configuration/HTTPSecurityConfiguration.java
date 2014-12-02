@@ -42,7 +42,7 @@ public class HTTPSecurityConfiguration {
                 .identity()
                 .stateless()
                 .http()
-                .forPath("/api/secure/*")
+                .forPath("/api/*")
                 .authenticateWith()
                 .token();
     }
