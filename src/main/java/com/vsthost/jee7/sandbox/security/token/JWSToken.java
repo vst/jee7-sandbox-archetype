@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.vsthost.jee7.sandbox.security.token;
 
 import org.picketlink.idm.credential.AbstractToken;
@@ -49,4 +50,3 @@ public class JWSToken extends AbstractToken {
         return this.jws.getSubject();
     }
 }
-

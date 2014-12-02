@@ -18,33 +18,32 @@ package com.vsthost.jee7.sandbox.services.exceptions;
 
 /**
  * A high level exception for end users.
- * 
+ *
  * <p>
- * 
+ *
  * TODO: Make sure that these exceptions are sent to the endusers.
- * 
- * @author Vehbi Sinan Tunalioglu.
+ *
+ * @author Vehbi Sinan Tunalioglu
  */
 public class HighLevelException extends Exception {
-	private static final long serialVersionUID = 1L;
-	int code;
-	String message;
-	
-	public static final int USERNAME_NOT_AVAILABLE = 1;
-	public static final int NO_SUCH_USER = 2;
-	public static final int NO_USER_FOR_CREDENTIALS = 3;
-	public static final int NO_SUCH_ROLE = 4;
-	
-	public HighLevelException(int code, String message) {
-		super();
-		this.code = code;
-		this.message = message;
-	}
-	
-	public String toJson () {
-		return String.format(
-				"{\"code\": %d, \"message\": \"%s\"}",
-				this.code,
-				this.message.replaceAll("\"", "\\\""));
-	}
+    private static final long serialVersionUID = 1L;
+    int code;
+    String message;
+
+    public static final int USERNAME_NOT_AVAILABLE = 1;
+    public static final int NO_SUCH_USER = 2;
+    public static final int NO_USER_FOR_CREDENTIALS = 3;
+    public static final int NO_SUCH_ROLE = 4;
+
+    public HighLevelException(int code, String message) {
+        super();
+        this.code = code;
+        this.message = message;
+    }
+
+    public String toJson () {
+        return String.format("{\"code\": %d, \"message\": \"%s\"}",
+                             this.code,
+                             this.message.replaceAll("\"", "\\\""));
+    }
 }

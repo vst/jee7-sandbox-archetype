@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.vsthost.jee7.sandbox.security;
 
 import com.vsthost.jee7.sandbox.models.Person;
@@ -41,13 +42,10 @@ import java.security.UnrecoverableKeyException;
 /**
  * TODO: Complete documentation.
  *
- * This file is created on 16/9/14.
- *
- * @author vst
+ * @author Vehbi Sinan Tunalioglu
  */
 @Stateless
 public class SecurityInitializer {
-
     /**
      * Defines the path of the keystore file.
      */
@@ -254,4 +252,3 @@ public class SecurityInitializer {
         return role;
     }
 }
-

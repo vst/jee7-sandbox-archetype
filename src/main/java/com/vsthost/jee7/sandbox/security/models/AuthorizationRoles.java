@@ -18,14 +18,14 @@ package com.vsthost.jee7.sandbox.security.models;
 
 /**
  * Defines application-wide auhorization roles and related functionality.
- * 
+ *
  * @author Vehbi Sinan Tunalioglu
  */
 public class AuthorizationRoles {
-	/**
-	 * Defines the "administrator" role label.
-	 */
-	public static final String ADMIN = "ADMIN";
+    /**
+     * Defines the "administrator" role label.
+     */
+    public static final String ADMIN = "ADMIN";
 
     /**
      * Defines the "user" role label.

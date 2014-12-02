@@ -26,7 +26,6 @@ import javax.persistence.Id;
  */
 @Entity
 public class Person {
-
     /**
      * Defines the database identifier of the person.
      */

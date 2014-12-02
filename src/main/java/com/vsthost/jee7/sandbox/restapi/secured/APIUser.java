@@ -54,10 +54,10 @@ import com.vsthost.jee7.sandbox.services.UserService;
  * @author Vehbi Sinan Tunalioglu
  */
 @Path("/")
-public class APIUser {	
-	@Inject
-	private UserService userService;
-	
+public class APIUser {
+    @Inject
+    private UserService userService;
+
 //	@Path("/users")
 //	@GET
 //	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

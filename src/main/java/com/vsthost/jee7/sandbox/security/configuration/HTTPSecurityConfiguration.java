@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.vsthost.jee7.sandbox.security.configuration;
 
 import org.picketlink.config.SecurityConfigurationBuilder;
@@ -27,7 +28,7 @@ import javax.enterprise.event.Observes;
  */
 public class HTTPSecurityConfiguration {
     /**
-     * Listenes to the Picketlink security configuration event and
+     * Listens to the Picketlink security configuration event and
      * configures the API security.
      *
      * @param event The Picketlink security condiguration event.

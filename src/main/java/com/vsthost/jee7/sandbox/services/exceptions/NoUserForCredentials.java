@@ -19,13 +19,13 @@ package com.vsthost.jee7.sandbox.services.exceptions;
 /**
  * A high level exception for end users indicating that there is
  * no user for the given credentials.
- * 
- * @author Vehbi Sinan Tunalioglu.
+ *
+ * @author Vehbi Sinan Tunalioglu
  */
 public class NoUserForCredentials extends HighLevelException {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public NoUserForCredentials() {
-		super(HighLevelException.NO_USER_FOR_CREDENTIALS, "No user with the given credentials.");
-	}
+    public NoUserForCredentials() {
+        super(HighLevelException.NO_USER_FOR_CREDENTIALS, "No user with the given credentials.");
+    }
 }

@@ -25,7 +25,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  * Provides a generic class which defines the application.
- * 
+ *
  * @author Vehbi Sinan Tunalioglu
  */
 public class VApplication {
@@ -38,17 +38,17 @@ public class VApplication {
      * Defines the version of the API.
      */
     public static final String API_VERSION = "0.0dev";
-    
+
     /**
      * Provides the entity manager.
      */
     @Produces
-	@PersistenceContext
+    @PersistenceContext
     private EntityManager em;
-    
+
     /**
-     * Produces a logger instance to be injected at the injection point. 
-     * 
+     * Produces a logger instance to be injected at the injection point.
+     *
      * @param injectionPoint Where the logger will be injected to.
      * @return A logger instance.
      */

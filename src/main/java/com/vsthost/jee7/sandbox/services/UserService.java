@@ -31,14 +31,14 @@ import com.vsthost.jee7.sandbox.services.exceptions.UsernameNotAvailable;
 
 /**
  * Provides a User management service.
- * 
+ *
  * @author Vehbi Sinan Tunalioglu
  */
 @Stateless
 public class UserService {
-	@Inject
-	private EntityManager em;
-	
+    @Inject
+    private EntityManager em;
+
 //	/**
 //	 * Returns a user if there is a user found matching
 //	 * the username and the password. Raises exception otherwise.

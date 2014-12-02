@@ -19,13 +19,13 @@ package com.vsthost.jee7.sandbox.services.exceptions;
 /**
  * A high level exception for end users indicating that the username
  * queried is taken or not available.
- * 
- * @author Vehbi Sinan Tunalioglu.
+ *
+ * @author Vehbi Sinan Tunalioglu
  */
 public class UsernameNotAvailable extends HighLevelException {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public UsernameNotAvailable(String username) {
-		super(HighLevelException.USERNAME_NOT_AVAILABLE, "The user name \"" + username + "\" is not available.");
-	}
+    public UsernameNotAvailable(String username) {
+        super(HighLevelException.USERNAME_NOT_AVAILABLE, "The user name \"" + username + "\" is not available.");
+    }
 }

@@ -19,13 +19,13 @@ package com.vsthost.jee7.sandbox.services.exceptions;
 /**
  * A high level exception for end users indicating that there is
  * no user for the given username.
- * 
- * @author Vehbi Sinan Tunalioglu.
+ *
+ * @author Vehbi Sinan Tunalioglu
  */
 public class NoSuchUser extends HighLevelException {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public NoSuchUser(String username) {
-		super(HighLevelException.NO_SUCH_USER, "No user defined with the username '" + username + "'.");
-	}
+    public NoSuchUser(String username) {
+        super(HighLevelException.NO_SUCH_USER, "No user defined with the username '" + username + "'.");
+    }
 }

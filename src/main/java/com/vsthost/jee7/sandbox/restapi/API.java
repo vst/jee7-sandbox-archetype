@@ -25,6 +25,4 @@ import javax.ws.rs.core.Application;
  * @author Vehbi Sinan Tunalioglu
  */
 @ApplicationPath("/api")
-public class API extends Application {
-	
-}
+public class API extends Application { }

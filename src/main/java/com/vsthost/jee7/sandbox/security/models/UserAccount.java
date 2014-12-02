@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.vsthost.jee7.sandbox.security.models;
 
 
@@ -37,17 +38,17 @@ import static org.picketlink.idm.model.annotation.StereotypeProperty.Property.ID
 @IdentityStereotype(USER)
 public class UserAccount extends AbstractIdentityType implements Account {
     /**
-     * <p>Can be used to query users by their activation code.</p>
+     * Defines an attribute parameter as a query attribute which can be used to query users by their activation code.
      */
     public static final AttributeParameter ACTIVATION_CODE = QUERY_ATTRIBUTE.byName("activationCode");
 
     /**
-     * <p>Can be used to query users by their login name.</p>
+     * Defines a query parameter as a query attribute which can be used to query users by their username.
      */
     public static final QueryParameter USERNAME = QUERY_ATTRIBUTE.byName("username");
 
     /**
-     * Defines the user name of the account.
+     * Defines the username of the account which is hardwired to the identity model.
      */
     @StereotypeProperty(IDENTITY_USER_NAME)
     @AttributeProperty
@@ -61,7 +62,7 @@ public class UserAccount extends AbstractIdentityType implements Account {
     private String activationCode;
 
     /**
-     * Defines the related person of the account.
+     * Defines the related person entity of the account.
      */
     @AttributeProperty
     private Person person;

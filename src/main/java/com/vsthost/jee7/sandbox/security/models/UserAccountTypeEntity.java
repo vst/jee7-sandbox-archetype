@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.vsthost.jee7.sandbox.security.models;
 
 import com.vsthost.jee7.sandbox.models.Person;

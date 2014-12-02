@@ -20,7 +20,7 @@ import org.junit.Test;
 
 /**
  * Provides a sample test class.
- * 
+ *
  * @author Vehbi Sinan Tunalioglu
  */
 public class SampleTest {
