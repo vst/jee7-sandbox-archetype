@@ -21,7 +21,7 @@ limitations under the License.
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>API</web-resource-name>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/api/*</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
