@@ -22,6 +22,7 @@ import org.picketlink.Identity;
 import javax.ejb.EJBException;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -66,9 +67,14 @@ public class HTTPExceptionMapper implements ExceptionMapper<Throwable> {
                 return HTTPResponseBuilder.authenticationRequired().build();
             }
         }
-        else {
-            // This is a bad request:
-            return HTTPResponseBuilder.badRequest().data("message", message).build();
+        else if (WebApplicationException.class.isInstance(exception)) {
+            // Check if not found:
+            if (((WebApplicationException) exception).getResponse().getStatus() == 404) {
+                return HTTPResponseBuilder.notFound().build();
+            }
         }
+
+        // This is a bad request:
+        return HTTPResponseBuilder.badRequest().data("message", message).build();
     }
 }

@@ -48,6 +48,8 @@ public class AccountOpeningInfo {
      */
     private String emailAddress;
 
+    public AccountOpeningInfo () {}
+
     public String getUsername() {
         return username;
     }

@@ -15,6 +15,8 @@
  */
 package com.vsthost.jee7.sandbox.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,9 +31,13 @@ public class Person {
     /**
      * Defines the database identifier of the person.
      */
+    /**
+     * Defines a unique, random generated identifier for the utility function.
+     */
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy="uuid")
+    private String id;
 
     /**
      * Defines the name of the person.
@@ -43,11 +49,11 @@ public class Person {
      */
     private String emailAddress;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

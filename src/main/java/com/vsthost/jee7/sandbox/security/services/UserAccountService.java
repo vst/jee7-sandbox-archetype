@@ -23,11 +23,14 @@ import com.vsthost.jee7.sandbox.security.models.UserAccount;
 import com.vsthost.jee7.sandbox.security.token.JWSToken;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.RelationshipManager;
+import org.picketlink.idm.credential.Credentials;
 import org.picketlink.idm.credential.Password;
 import org.picketlink.idm.credential.Token;
+import org.picketlink.idm.credential.UsernamePasswordCredentials;
 import org.picketlink.idm.model.Account;
 import org.picketlink.idm.model.basic.BasicModel;
 import org.picketlink.idm.model.basic.Role;
+import org.picketlink.idm.model.basic.User;
 import org.picketlink.idm.query.IdentityQuery;
 
 import javax.ejb.Stateless;
@@ -35,6 +38,7 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * Provides a management service for user accounts.
@@ -51,6 +55,48 @@ public class UserAccountService {
 
     @Inject
     private Token.Provider<JWSToken> tokenProvider;
+
+    @Inject
+    Logger logger;
+
+    /**
+     * Returns all user account instances:
+     *
+     * @return All user account instances.
+     */
+    public List<UserAccount> getAll () {
+        // Create the query instance:
+        IdentityQuery<UserAccount> query = this.identityManager.createIdentityQuery(UserAccount.class);
+
+        // Return all users:
+        return query.getResultList();
+    }
+
+    /**
+     * Finds the user account by its id if there exists one.
+     *
+     * @param id The id of the user account.
+     * @return An optional value of a user account. The function may return {@code None} is no
+     * user account is found by the id provided.
+     */
+    public Optional<UserAccount> getById(String id) {
+        // Create the query instance:
+        IdentityQuery<UserAccount> query = this.identityManager.createIdentityQuery(UserAccount.class);
+
+        // Set the query parameter:
+        query.setParameter(UserAccount.ID, id);
+
+        // Get results:
+        List<UserAccount> result = query.getResultList();
+
+        // If there is a result, return the first one:
+        if (!result.isEmpty()) {
+            return Optional.of(result.get(0));
+        }
+
+        // There is no such a user account. Return empty optional:
+        return Optional.empty();
+    }
 
     /**
      * Finds the user account by its username if there exists one.
@@ -291,6 +337,27 @@ public class UserAccountService {
             // Update the identity manager with the account info:
             this.identityManager.update(account);
         }
+    }
+
+
+    /**
+     * Checks username/password credentials.
+     *
+     * @param username The username of the credentials.
+     * @param password The password of the credentials.
+     * @return Boolean indicating if the credentials are valid.
+     */
+    public boolean checkCredentials(String username, String password) {
+        // Create credentials:
+        UsernamePasswordCredentials credential = new UsernamePasswordCredentials();
+        credential.setUsername(username);
+        credential.setPassword(new Password(password));
+
+        // Validate credentials:
+        this.identityManager.validateCredentials(credential);
+
+        // Get the credential check status and return:
+        return Credentials.Status.VALID.equals(credential.getStatus());
     }
 
     /**

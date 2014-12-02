@@ -48,6 +48,11 @@ public class UserAccount extends AbstractIdentityType implements Account {
     public static final QueryParameter USERNAME = QUERY_ATTRIBUTE.byName("username");
 
     /**
+     * Defines a query parameter as a query attribute which can be used to query users by their IDs.
+     */
+    public static final QueryParameter ID = QUERY_ATTRIBUTE.byName("id");
+
+    /**
      * Defines the username of the account which is hardwired to the identity model.
      */
     @StereotypeProperty(IDENTITY_USER_NAME)

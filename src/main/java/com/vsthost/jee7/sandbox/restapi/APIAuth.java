@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vsthost.jee7.sandbox.restapi.secured;
+package com.vsthost.jee7.sandbox.restapi;
 
 import com.vsthost.jee7.sandbox.security.token.JWSToken;
 import org.picketlink.Identity;
@@ -31,8 +31,8 @@ import javax.ws.rs.Path;
  *
  * @author Vehbi Sinan Tunalioglu
  */
-@Path("/secure/account")
-public class APIUserAccount {
+@Path("/auth")
+public class APIAuth {
     @Inject
     private Token.Provider<JWSToken> tokenProvider;
 
@@ -43,7 +43,7 @@ public class APIUserAccount {
     @LoggedIn
     @Path("/logout/")
     public void logout() {
-        // Get the user acount:
+        // Get the user account:
         Account account = this.identity.getAccount();
 
         // Invalidate the token:

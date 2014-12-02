@@ -77,6 +77,11 @@ public class HTTPResponseBuilder {
         return this.response.entity(this.dataContainer).build();
     }
 
+
+    public static HTTPResponseBuilder ok () {
+        return new HTTPResponseBuilder(Status.OK);
+    }
+
     public static HTTPResponseBuilder accessDenied () {
         return new HTTPResponseBuilder(Status.FORBIDDEN).error("Access denied");
     }
@@ -85,11 +90,11 @@ public class HTTPResponseBuilder {
         return new HTTPResponseBuilder(Status.UNAUTHORIZED).error("Authentication required");
     }
 
-    public static HTTPResponseBuilder badRequest () {
-        return new HTTPResponseBuilder(Status.BAD_REQUEST).error("Bad request");
+    public static HTTPResponseBuilder notFound () {
+        return new HTTPResponseBuilder(Status.NOT_FOUND).error("Not found");
     }
 
-    public static HTTPResponseBuilder ok () {
-        return new HTTPResponseBuilder(Status.OK);
+    public static HTTPResponseBuilder badRequest () {
+        return new HTTPResponseBuilder(Status.BAD_REQUEST).error("Bad request");
     }
 }
