@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vsthost.jee7.sandbox.restapi;
+package com.vsthost.jee7.sandbox.restapi.endpoints;
 
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;

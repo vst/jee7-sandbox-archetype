@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vsthost.jee7.sandbox.restapi;
+package com.vsthost.jee7.sandbox.restapi.endpoints;
 
 import java.net.HttpURLConnection;
 import java.util.List;

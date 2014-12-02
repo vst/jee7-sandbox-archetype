@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vsthost.jee7.sandbox.restapi.serializers;
+package com.vsthost.jee7.sandbox.restapi.forms;
 
 /**
  * Provides a password change form.

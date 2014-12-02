@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vsthost.jee7.sandbox.restapi;
+package com.vsthost.jee7.sandbox.restapi.endpoints;
 
 import com.vsthost.jee7.sandbox.security.token.JWSToken;
 import org.picketlink.Identity;
